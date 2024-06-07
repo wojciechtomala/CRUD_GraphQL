@@ -22,21 +22,28 @@ namespace dotNetGraphQL
             );
         }
 
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) { 
-            if(env.IsDevelopment())
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+            if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UsePlayground(new PlaygroundOptions { 
-                    QueryPath = "/api",
-                    Path = "/Playground"
+
+                // Ustawienia Playground
+                app.UsePlayground(new PlaygroundOptions
+                {
+                    QueryPath = "/graphql",
+                    Path = "/playground"
                 });
             }
 
             app.UseGraphQL("/api");
+            
+            // Middleware GraphQL
             app.UseRouting();
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGraphQL("/graphql");
+
                 endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");

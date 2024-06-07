@@ -1,0 +1,11 @@
+<div *ngIf="students.length > 0; else noStudents">
+    <ul>
+      <li *ngFor="let student of students">
+        {{ student.name }} ({{ student.age }} years old)
+      </li>
+    </ul>
+  </div>
+  <ng-template #noStudents>
+    <p>No students available.</p>
+  </ng-template>
+  
